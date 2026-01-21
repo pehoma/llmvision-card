@@ -1,18 +1,19 @@
-import { getIcon, translate } from './helpers.js?v=1.6.0';
-import { labels } from './labels.js?v=1.6.0';
+import { getIcon, translate } from './helpers.js?v=1.6.0-alpha3';
+import { labels } from './labels.js?v=1.6.0-alpha3';
 import { LitElement, css, html } from "https://unpkg.com/lit-element@2.0.1/lit-element.js?module";
-import { BaseLLMVisionCard } from './card-base.js?v=1.6.0';
-import { LLMVisionPreviewCard } from './llmvision-preview-card.js?v=1.6.0';
+import { BaseLLMVisionCard } from './card-base.js?v=1.6.0-alpha3';
+import { LLMVisionPreviewCard } from './llmvision-preview-card.js?v=1.6.0-alpha3';
 
 class TimelineCardEditor extends LitElement {
     static get properties() { return { _config: { type: Object } }; }
     setConfig(config) { this._config = config || {}; }
     render() {
         if (!this._config) return html`<div>Please configure the card.</div>`;
-        const generalSchema = this._getSchema().slice(0, 3);
-        const filterSchema = this._getSchema().slice(3, 5);
-        const languageSchema = this._getSchema().slice(5, 6);
-        const customizeSchema = this._getSchema().slice(6);
+        const schema = this._getSchema();
+        const generalSchema = schema.slice(0, 3);
+        const filterSchema = schema.slice(3, 5);
+        const localeSchema = schema.slice(5, 7);
+        const customizeSchema = schema.slice(7);
         return html`
             <style>
                 .card-content{display:flex;flex-direction:column;gap:16px;}
@@ -43,9 +44,9 @@ class TimelineCardEditor extends LitElement {
                         </div>
                     </details>
                     <details>
-                        <summary><ha-icon class="section-icon" icon="mdi:translate"></ha-icon>Language</summary>
+                        <summary><ha-icon class="section-icon" icon="mdi:translate"></ha-icon>Locale</summary>
                         <div class="section-content">
-                            <ha-form .data=${this._config} .schema=${languageSchema}
+                            <ha-form .data=${this._config} .schema=${localeSchema}
                                 .computeLabel=${this._computeLabel} .computeHelper=${this._computeHelper}
                                 @value-changed=${this._valueChanged}></ha-form>
                         </div>
@@ -84,7 +85,7 @@ class TimelineCardEditor extends LitElement {
                 }
             }
         ];
-        const languageSchema = [
+        const localeSchema = [
             {
                 name: "language",
                 description: "Language for the card. This will be used to generate icons and translations.",
@@ -108,6 +109,18 @@ class TimelineCardEditor extends LitElement {
                         ]
                     }
                 }
+            },
+            {
+                name: "time_format",
+                description: "Choose between 12-hour and 24-hour time display.",
+                selector: {
+                    select: {
+                        options: [
+                            { value: "24h", label: "24-hour" },
+                            { value: "12h", label: "12-hour" }
+                        ]
+                    }
+                }
             }
         ];
         const customizeSchema = [
@@ -118,13 +131,14 @@ class TimelineCardEditor extends LitElement {
             description: `Color for ${c.charAt(0).toUpperCase() + c.slice(1)}`,
             selector: { color_rgb: {} }
         })));
-        return [...generalSchema, ...filterSchema, ...languageSchema, ...customizeSchema];
+        return [...generalSchema, ...filterSchema, ...localeSchema, ...customizeSchema];
     }
     _computeLabel(s) {
         return ({
             header: "Header", number_of_events: "Number of Events",
             number_of_days: "Number of Days", category_filters: "Category Filters",
             camera_filters: "Camera Filters", custom_colors: "Custom Colors", language: "Language",
+            time_format: "Time Format",
             default_icon: "Default Icon", default_color: "Default Color"
         })[s.name] || s.name;
     }
@@ -152,7 +166,7 @@ class LLMVisionCard extends BaseLLMVisionCard {
         this.setCommonConfig(config, { requireEventLimits: true });
     }
     static getConfigElement() { return document.createElement('timeline-card-editor'); }
-    static getStubConfig() { return { number_of_days: 7, number_of_events: 3, language: 'en' }; }
+    static getStubConfig() { return { number_of_days: 7, number_of_events: 3, language: 'en', time_format: '24h' }; }
 
     getCardSize() {
         return 3;
@@ -225,7 +239,8 @@ class LLMVisionCard extends BaseLLMVisionCard {
             category_filters: this.category_filters,
             camera_filters: this.camera_filters,
             number_of_events: this.number_of_events,
-            number_of_days: this.number_of_days
+            number_of_days: this.number_of_days,
+            time_format: this.time_format
         });
         if (currentHash === this._lastEventHash) return;
         this._lastEventHash = currentHash;
@@ -304,7 +319,7 @@ class LLMVisionCard extends BaseLLMVisionCard {
     }
 
     static getStubConfig() {
-        return { number_of_days: 24, number_of_events: 5, language: 'en' };
+        return { number_of_days: 24, number_of_events: 5, language: 'en', time_format: '24h' };
     }
 }
 

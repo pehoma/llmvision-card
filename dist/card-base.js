@@ -34,6 +34,7 @@ export class BaseLLMVisionCard extends HTMLElement {
         this.custom_colors = config.custom_colors || {};
         this.default_icon = config.default_icon || 'mdi:motion-sensor';
         this.default_color = config.default_color || '#929292';
+        this.time_format = config.time_format || '24h';
         if (requireEventLimits) {
             if (!this.number_of_events && !this.number_of_days) {
                 throw new Error('Either number_of_events or number_of_days needs to be set.');
@@ -149,7 +150,15 @@ export class BaseLLMVisionCard extends HTMLElement {
     }
 
     formatTime(dateObj) {
-        return `${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
+        const format = this.time_format || '24h';
+        const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+        if (format === '12h') {
+            const hours = dateObj.getHours();
+            const normalized = hours % 12 || 12;
+            const suffix = hours >= 12 ? 'PM' : 'AM';
+            return `${normalized.toString().padStart(2, '0')}:${minutes} ${suffix}`;
+        }
+        return `${dateObj.getHours().toString().padStart(2, '0')}:${minutes}`;
     }
 
     formatDateTimeShort(dateStr) {
@@ -170,9 +179,8 @@ export class BaseLLMVisionCard extends HTMLElement {
         const d = new Date(dateStr);
         const options = { month: 'short', day: 'numeric' };
         const datePart = d.toLocaleDateString('en-US', options);
-        const h = d.getHours().toString().padStart(2, '0');
-        const m = d.getMinutes().toString().padStart(2, '0');
-        return `${datePart}, ${h}:${m}`;
+        const timePart = this.formatTime(d);
+        return `${datePart}, ${timePart}`;
     }
 
     resolveKeyFrame(hass, keyFrame) {
