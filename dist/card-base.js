@@ -35,6 +35,7 @@ export class BaseLLMVisionCard extends HTMLElement {
         this.default_icon = config.default_icon || 'mdi:motion-sensor';
         this.default_color = config.default_color || '#929292';
         this.time_format = config.time_format || '24h';
+        this.filter_false_positives = config.filter_false_positives !== false;
         if (requireEventLimits) {
             if (!this.number_of_events && !this.number_of_days) {
                 throw new Error('Either number_of_events or number_of_days needs to be set.');
@@ -97,6 +98,10 @@ export class BaseLLMVisionCard extends HTMLElement {
         return JSON.stringify(base);
     }
 
+    _filterNoActivity(details) {
+        return details.filter((d) => (d?.title || '').trim().toLowerCase() !== 'no activity observed');
+    }    
+
     _filterByHours(details, hours) {
         if (!hours) return details;
         const cutoff = Date.now() - hours * 3600 * 1000;
@@ -121,6 +126,9 @@ export class BaseLLMVisionCard extends HTMLElement {
 
     _applyAllFilters(details) {
         let res = details;
+        if (this.filter_false_positives) {
+            res = this._filterNoActivity(res);
+        }
         res = this._filterByCategories(res);
         res = this._filterByCameras(res);
         return res;

@@ -9,9 +9,9 @@ export class TimelinePreviewCardEditor extends LitElement {
     render() {
         if (!this._config) return html`<div>Please configure the card.</div>`;
         const schema = this._getSchema();
-        const filterSchema = schema.slice(0, 2);
-        const localeSchema = schema.slice(2, 4);
-        const customizeSchema = schema.slice(4);
+        const filterSchema = schema.slice(0, 3);
+        const localeSchema = schema.slice(3, 5);
+        const customizeSchema = schema.slice(5);
         return html`
             <style>
                 .preview-card-content { display:flex; flex-direction:column; gap:16px; }
@@ -70,6 +70,11 @@ export class TimelinePreviewCardEditor extends LitElement {
                             .map(e => ({ value: e, label: this.hass.states[e].attributes.friendly_name || e }))
                     }
                 }
+            },
+            {
+                name: "filter_false_positives",
+                description: "Hide events titled 'No activity observed'.",
+                selector: { boolean: { default: true } }
             }
         ];
         const localeSchema = [
@@ -117,7 +122,8 @@ export class TimelinePreviewCardEditor extends LitElement {
     _computeLabel(s) {
         return ({
             entity: "Calendar Entity", category_filters: "Category Filters",
-            camera_filters: "Camera Filters", language: "Language",
+            camera_filters: "Camera Filters", filter_false_positives: "Filter False Positives",
+            language: "Language",
             time_format: "Time Format",
         })[s.name] || s.name;
     }
@@ -130,7 +136,7 @@ customElements.define("timeline-preview-card-editor", TimelinePreviewCardEditor)
 export class LLMVisionPreviewCard extends BaseLLMVisionCard {
     setConfig(config) { this.setCommonConfig(config, { requireEventLimits: false }); }
     static getConfigElement() { return document.createElement('timeline-preview-card-editor'); }
-    static getStubConfig() { return { entity: 'calendar.llm_vision_timeline', language: 'en', time_format: '24h' }; }
+    static getStubConfig() { return { entity: 'calendar.llm_vision_timeline', language: 'en', time_format: '24h', filter_false_positives: true }; }
 
     getCardSize() {
         return 3;
@@ -182,6 +188,7 @@ export class LLMVisionPreviewCard extends BaseLLMVisionCard {
             this.category_filters
         );
         if (!details) return;
+        details = this._applyAllFilters(details);
 
         const currentHash = this._hashState({
             ...details,
@@ -189,7 +196,8 @@ export class LLMVisionPreviewCard extends BaseLLMVisionCard {
             camera_filters: this.camera_filters,
             number_of_events: this.number_of_events,
             number_of_days: this.number_of_days,
-            time_format: this.time_format
+            time_format: this.time_format,
+            filter_false_positives: this.filter_false_positives
         });
         if (currentHash === this._lastEventHash) return;
         this._lastEventHash = currentHash;
@@ -258,7 +266,7 @@ export class LLMVisionPreviewCard extends BaseLLMVisionCard {
     }
 
     static getStubConfig() {
-        return { language: 'en', time_format: '24h' };
+        return { language: 'en', time_format: '24h', filter_false_positives: true };
     }
 }
 customElements.define("llmvision-preview-card", LLMVisionPreviewCard);

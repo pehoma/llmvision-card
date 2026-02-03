@@ -11,9 +11,9 @@ class TimelineCardEditor extends LitElement {
         if (!this._config) return html`<div>Please configure the card.</div>`;
         const schema = this._getSchema();
         const generalSchema = schema.slice(0, 3);
-        const filterSchema = schema.slice(3, 5);
-        const localeSchema = schema.slice(5, 7);
-        const customizeSchema = schema.slice(7);
+        const filterSchema = schema.slice(3, 6);
+        const localeSchema = schema.slice(6, 8);
+        const customizeSchema = schema.slice(8);
         return html`
             <style>
                 .card-content{display:flex;flex-direction:column;gap:16px;}
@@ -83,6 +83,11 @@ class TimelineCardEditor extends LitElement {
                             .map(e => ({ value: e, label: this.hass.states[e].attributes.friendly_name || e }))
                     }
                 }
+            },
+            {
+                name: "filter_false_positives",
+                description: "Hide events titled 'No activity observed'.",
+                selector: { boolean: { default: true } }
             }
         ];
         const localeSchema = [
@@ -137,7 +142,8 @@ class TimelineCardEditor extends LitElement {
         return ({
             header: "Header", number_of_events: "Number of Events",
             number_of_days: "Number of Days", category_filters: "Category Filters",
-            camera_filters: "Camera Filters", custom_colors: "Custom Colors", language: "Language",
+            camera_filters: "Camera Filters", filter_false_positives: "Filter False Positives",
+            custom_colors: "Custom Colors", language: "Language",
             time_format: "Time Format",
             default_icon: "Default Icon", default_color: "Default Color"
         })[s.name] || s.name;
@@ -166,7 +172,7 @@ class LLMVisionCard extends BaseLLMVisionCard {
         this.setCommonConfig(config, { requireEventLimits: true });
     }
     static getConfigElement() { return document.createElement('timeline-card-editor'); }
-    static getStubConfig() { return { number_of_days: 7, number_of_events: 3, language: 'en', time_format: '24h' }; }
+    static getStubConfig() { return { number_of_days: 7, number_of_events: 3, language: 'en', time_format: '24h', filter_false_positives: true }; }
 
     getCardSize() {
         return 3;
@@ -234,6 +240,7 @@ class LLMVisionCard extends BaseLLMVisionCard {
             this.camera_filters,
             this.category_filters);
         if (!details) return;
+        details = this._applyAllFilters(details);
 
         const currentHash = this._hashState({
             ...details,
@@ -241,7 +248,8 @@ class LLMVisionCard extends BaseLLMVisionCard {
             camera_filters: this.camera_filters,
             number_of_events: this.number_of_events,
             number_of_days: this.number_of_days,
-            time_format: this.time_format
+            time_format: this.time_format,
+            filter_false_positives: this.filter_false_positives
         });
         if (currentHash === this._lastEventHash) return;
         this._lastEventHash = currentHash;
@@ -320,7 +328,7 @@ class LLMVisionCard extends BaseLLMVisionCard {
     }
 
     static getStubConfig() {
-        return { number_of_days: 24, number_of_events: 5, language: 'en', time_format: '24h' };
+        return { number_of_days: 24, number_of_events: 5, language: 'en', time_format: '24h', filter_false_positives: true };
     }
 }
 
