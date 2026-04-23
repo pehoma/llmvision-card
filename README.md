@@ -30,6 +30,11 @@
 
 <img src="https://github.com/user-attachments/assets/97f6e608-bdf3-44d1-89f1-fd89cda7b764" width="50%" height="auto" />
 
+## Many thanks to valentine
+
+## Changes in this fork:
+1. Added helper function to hide entries with no activites in multi languages
+
 ## Prerequisites
 1. [LLM Vision](https://github.com/valentinfrlch/ha-llmvision) set up in Home Assistant
 2. Timeline provider set up in LLM Vision
