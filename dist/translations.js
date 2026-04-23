@@ -39,7 +39,7 @@ export const de = {
         "noEventsCategory": "Keine Ereignisse für die ausgewählte Kategorie gefunden.",
         "today": "Heute",
         "yesterday": "Gestern",
-        "noActivity": "Keine Aktivität beobachtet"
+        "noActivity": "Keine Aktivität gesehen"
     }
 }
 export const en = {
