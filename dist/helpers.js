@@ -48,3 +48,11 @@ const translations = {
 export function translate(key, language) {
     return translations[language] && translations[language][key] ? translations[language][key] : translations['en'][key];
 }
+
+export function getNoActivityPhrases() {
+    return new Set(
+        Object.values(translations)
+            .map(t => (t.noActivity || '').trim().toLowerCase())
+            .filter(Boolean)
+    );
+}

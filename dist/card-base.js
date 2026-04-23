@@ -1,4 +1,4 @@
-import { translate, hexToRgba } from './helpers.js?v=1.6.0';
+import { translate, hexToRgba, getNoActivityPhrases } from './helpers.js?v=1.6.0';
 
 const __LLMVISION_VERSION = 'v1.6.0';
 function __logLLMVisionBadge(context) {
@@ -99,8 +99,9 @@ export class BaseLLMVisionCard extends HTMLElement {
     }
 
     _filterNoActivity(details) {
-        return details.filter((d) => (d?.title || '').trim().toLowerCase() !== 'no activity observed');
-    }    
+        const noActivityPhrases = getNoActivityPhrases();
+        return details.filter((d) => !noActivityPhrases.has((d?.title || '').trim().toLowerCase()));
+    }
 
     _filterByHours(details, hours) {
         if (!hours) return details;

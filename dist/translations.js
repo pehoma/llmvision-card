@@ -5,7 +5,8 @@ export const bg = {
         "noEventsCamera": "Няма нови известия за избраната/ите камера/и.",
         "noEventsCategory": "Няма нови известия за избраната категория.",
         "today": "Днес",
-        "yesterday": "Вчера"
+        "yesterday": "Вчера",
+        "noActivity": "Не е наблюдавана активност"
     }
 }
 export const ca = {
@@ -15,7 +16,8 @@ export const ca = {
         "noEventsCamera": "No s'han trobat esdeveniments per a la/les càmera/es seleccionada/es.",
         "noEventsCategory": "No s'han trobat esdeveniments per a la categoria seleccionada.",
         "today": "Avui",
-        "yesterday": "Ahir"
+        "yesterday": "Ahir",
+        "noActivity": "No s'ha observat activitat"
     }
 }
 export const cs = {
@@ -25,7 +27,8 @@ export const cs = {
         "noEventsCamera": "Žádné události nenalezeny pro vybranou kameru/y",
         "noEventsCategory": "Žádné události nenalezeny pro vybranou kategorii",
         "today": "Dnes",
-        "yesterday": "Včera"
+        "yesterday": "Včera",
+        "noActivity": "Nebyla pozorována žádná aktivita"
     }
 }
 export const de = {
@@ -35,7 +38,8 @@ export const de = {
         "noEventsCamera": "Keine Ereignisse für die ausgewählten Kameras gefunden.",
         "noEventsCategory": "Keine Ereignisse für die ausgewählte Kategorie gefunden.",
         "today": "Heute",
-        "yesterday": "Gestern"
+        "yesterday": "Gestern",
+        "noActivity": "Keine Aktivität beobachtet"
     }
 }
 export const en = {
@@ -45,7 +49,8 @@ export const en = {
         "noEventsCamera": "No events found for the selected camera(s).",
         "noEventsCategory": "No events found for the selected category.",
         "today": "Today",
-        "yesterday": "Yesterday"
+        "yesterday": "Yesterday",
+        "noActivity": "No activity observed"
     }
 }
 export const es = {
@@ -55,7 +60,8 @@ export const es = {
         "noEventsCamera": "No se encontraron eventos para la(s) cámara(s) seleccionada(s).",
         "noEventsCategory": "No se encontraron eventos para la(s) categoría(s) seleccionada(s).",
         "today": "Hoy",
-        "yesterday": "Ayer"
+        "yesterday": "Ayer",
+        "noActivity": "No se observó actividad"
     }
 }
 export const fr = {
@@ -65,7 +71,8 @@ export const fr = {
         "noEventsCamera": "Aucun événement trouvé pour la(les) caméra(s) sélectionnée(s).",
         "noEventsCategory": "Aucun événement trouvé pour la(les) catégorie(s) sélectionnée(s).",
         "today": "Aujourd'hui",
-        "yesterday": "Hier"
+        "yesterday": "Hier",
+        "noActivity": "Aucune activité observée"
     }
 }
 export const hu = {
@@ -75,7 +82,8 @@ export const hu = {
         "noEventsCamera": "A kiválasztott kamerá(k)hoz nem tartoznak események.",
         "noEventsCategory": "A kiválasztott kategóriához nem tartoznak események.",
         "today": "Ma",
-        "yesterday": "Tegnap"
+        "yesterday": "Tegnap",
+        "noActivity": "Nem észlelt aktivitás"
     }
 }
 export const it = {
@@ -85,7 +93,8 @@ export const it = {
         "noEventsCamera": "Nessun evento trovato per la(les) telecamera(e) selezionata(e).",
         "noEventsCategory": "Nessun evento trovato per la(les) categoria(e) selezionata(e).",
         "today": "Oggi",
-        "yesterday": "Ieri"
+        "yesterday": "Ieri",
+        "noActivity": "Nessuna attività osservata"
     }
 }
 export const nl = {
@@ -95,7 +104,8 @@ export const nl = {
         "noEventsCamera": "Geen evenementen gevonden voor de geselecteerde camera('s).",
         "noEventsCategory": "Geen evenementen gevonden voor de geselecteerde categorie.",
         "today": "Vandaag",
-        "yesterday": "Gisteren"
+        "yesterday": "Gisteren",
+        "noActivity": "Geen activiteit waargenomen"
     }
 }
 export const pl = {
@@ -105,7 +115,8 @@ export const pl = {
         "noEventsCamera": "Nie znaleziono aktywnosci dla wybranej kamery.",
         "noEventsCategory": "Nie znaleziono aktywnosci dla wybranej kategorii.",
         "today": "Dzis",
-        "yesterday": "Wczoraj"
+        "yesterday": "Wczoraj",
+        "noActivity": "Nie zaobserwowano aktywności"
     }
 }
 export const pt = {
@@ -115,7 +126,8 @@ export const pt = {
         "noEventsCamera": "Nenhum evento encontrado para a(s) câmera(s) selecionada(s).",
         "noEventsCategory": "Nenhum evento encontrado para a(s) categoria(s) selecionada(s).",
         "today": "Hoje",
-        "yesterday": "Ontem"
+        "yesterday": "Ontem",
+        "noActivity": "Nenhuma atividade observada"
     }
 }
 export const sk = {
@@ -125,7 +137,8 @@ export const sk = {
         "noEventsCamera": "Žiadne udalosti nenájdené pre vybranú kameru(y).",
         "noEventsCategory": "Žiadne udalosti nenájdené pre vybranú kategóriu.",
         "today": "Dnes",
-        "yesterday": "Včera"
+        "yesterday": "Včera",
+        "noActivity": "Nebola pozorovaná žiadna aktivita"
     }
 }
 export const sv = {
@@ -135,6 +148,7 @@ export const sv = {
         "noEventsCamera": "Inga händelser hittades för den valda kameran/erna.",
         "noEventsCategory": "Inga händelser hittades för den valda kategorin.",
         "today": "Idag",
-        "yesterday": "Igår"
+        "yesterday": "Igår",
+        "noActivity": "Ingen aktivitet observerad"
     }
 }
