@@ -100,7 +100,10 @@ export class BaseLLMVisionCard extends HTMLElement {
 
     _filterNoActivity(details) {
         const noActivityPhrases = getNoActivityPhrases();
-        return details.filter((d) => !noActivityPhrases.has((d?.title || '').trim().toLowerCase()));
+        return details.filter((d) => {
+            const title = (d?.title || '').trim().toLowerCase();
+            return !Array.from(noActivityPhrases).some(phrase => title.startsWith(phrase));
+        });
     }
 
     _filterByHours(details, hours) {
