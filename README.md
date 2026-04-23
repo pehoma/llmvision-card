@@ -33,7 +33,7 @@
 ## Many thanks to valentine
 
 ## Changes in this fork:
-1. Added helper function to hide entries with no activites in multi languages
+1. Added helper function to hide entries with no activites in multi languages (WIP)
 
 ## Prerequisites
 1. [LLM Vision](https://github.com/valentinfrlch/ha-llmvision) set up in Home Assistant
